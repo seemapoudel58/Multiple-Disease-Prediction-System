@@ -3,6 +3,7 @@ from user import login, sign_up
 from streamlit_option_menu import option_menu
 from app_diabetes import app_diabetes , show_diabetes_model_test_result, show_eda_for_diabetes, show_decision_tree_description
 from app_heart import app_heartdisease, model, show_heart_model_test_result, show_eda_for_heart_disease, show_logistic_regression_description
+from app_breast_cancer import app_breast_cancer, show_breast_cancer_model_test_result, show_eda_for_breast_cancer, show_svm_description
 from user import get_user_predictions  # Import database function
 
 # Set page config at the top before any other Streamlit command
@@ -23,15 +24,18 @@ def load_health_assistant():
         [
             'Diabetes Prediction',
             'Heart Disease Prediction',
+            'Breast Cancer Prediction',
             'My Predictions',
             'Heart Model Test Result',
             'Diabetes Model Test Result',
+            'Breast Cancer Model Test Result',
             'EDA for Heart Disease',
             'EDA for Diabetes',
+            'EDA for Breast Cancer',
             'Model Description'
         ],
         menu_icon='hospital-fill',
-        icons=['activity', 'heart', 'clock', 'bar-chart', 'bar-chart', 'graph-up', 'graph-up', 'database'],
+        icons=['activity', 'heart', 'clock', 'bar-chart', 'bar-chart', 'bar-chart', 'graph-up', 'graph-up', 'graph-up', 'database'],
         default_index=1
     )
      
@@ -40,6 +44,8 @@ def load_health_assistant():
         app_diabetes()
     elif selected == 'Heart Disease Prediction':
         app_heartdisease(model)
+    elif selected == 'Breast Cancer Prediction':
+        app_breast_cancer()
     elif selected == 'My Predictions':
         st.subheader("📜 My Previous Predictions")
         predictions = get_user_predictions(email)
@@ -56,13 +62,18 @@ def load_health_assistant():
         show_heart_model_test_result()
     elif selected == 'Diabetes Model Test Result':
         show_diabetes_model_test_result()
+    elif selected == 'Breast Cancer Model Test Result':
+        show_breast_cancer_model_test_result()
     elif selected ==   'EDA for Heart Disease':
         show_eda_for_heart_disease()
     elif selected ==   'EDA for Diabetes':
         show_eda_for_diabetes()
+    elif selected ==   'EDA for Breast Cancer':
+        show_eda_for_breast_cancer()
     elif selected ==   'Model Description':
         show_logistic_regression_description()
         show_decision_tree_description()
+        show_svm_description()
 
 
 def main():
