@@ -2,136 +2,159 @@
 
 ## Overview
 
-This project implements a comprehensive **Multiple Disease Prediction System** using Machine Learning algorithms. The system can predict three different diseases:
-
-1. **Heart Disease** - Using Logistic Regression
-2. **Diabetes** - Using Decision Tree
-3. **Breast Cancer** - Using Support Vector Machine (SVM)
-
-The application features a user-friendly Streamlit web interface with authentication, prediction history tracking, EDA visualizations, and detailed model descriptions.
+A web application for predicting multiple diseases using machine learning. The system includes user authentication, prediction tracking, and disease analysis visualizations. It predicts Heart Disease, Diabetes, and Breast Cancer using custom machine learning implementations.
 
 ## Features
 
-- 🔐 **User Authentication**: Sign up and login system
-- 📊 **Disease Predictions**: Predict Heart Disease, Diabetes, and Breast Cancer
-- 📈 **Exploratory Data Analysis (EDA)**: Visualizations for each disease
-- 📋 **Prediction History**: Track all your predictions in "My Predictions"
-- 🧪 **Model Test Results**: View detailed performance metrics for each model
-- 📚 **Model Descriptions**: Learn about the algorithms used (Logistic Regression, Decision Tree, SVM)
-- 🎯 **User-Specific Tracking**: Personalized prediction history per user
+- User authentication with secure password hashing
+- Three disease prediction models (Heart Disease, Diabetes, Breast Cancer)
+- Prediction history tracking for each user
+- Exploratory Data Analysis visualizations
+- Model performance metrics and confusion matrices
+- Health alerts for repeated predictions
+- Interactive web interface with Streamlit
+
+## Project Structure
+
+```
+Multiple-Disease-Prediction/
+├── app.py                          # Main Streamlit application entry point
+├── plot_metric.py                  # Utility for plotting metrics
+├── requirements.txt                # Project dependencies
+├── README.md                       # This file
+│
+├── data/
+│   ├── raw/                       # Original datasets
+│   │   ├── diabetes.csv
+│   │   └── heart.csv
+│   └── processed/                 # Processed and split data
+│       ├── X_train.npy
+│       ├── X_test.npy
+│       ├── X_val.npy
+│       ├── y_train.npy
+│       ├── y_test.npy
+│       └── y_val.npy
+│
+├── database/                      # SQLite database
+│
+├── notebooks/                     # Jupyter notebooks
+│   ├── eda/                      # Exploratory Data Analysis
+│   │   ├── eda_diabetic.ipynb
+│   │   └── eda_heart_disease.ipynb
+│   └── experiments/              # Model experiments
+│
+├── results/                       # Results and outputs
+│   ├── eda/                      # EDA visualizations
+│   │   ├── diabetes/
+│   │   ├── heart_disease/
+│   │   └── breast_cancer/
+│   ├── metrics/                  # Performance metrics CSV files
+│   │   └── diabetic_model_metrics.csv
+│   ├── plots/                    # Model performance plots
+│   └── static/                   # Static assets
+│       ├── diabetes/
+│       ├── heart_disease/
+│
+├── saved_models/                 # Trained model files
+│   ├── diabetes_model_decision_tree.sav
+│   ├── weights.npy              # Model weights
+│   └── bias.npy                 # Model bias
+│
+├── src/                          # Source code
+│   ├── __init__.py
+│   │
+│   ├── app/                      # Streamlit application
+│   │   ├── __init__.py
+│   │   ├── main.py              # (Not currently used)
+│   │   └── pages/               # Disease prediction pages
+│   │       ├── __init__.py
+│   │       ├── diabetes_page.py
+│   │       ├── heart_page.py
+│   │       └── breast_cancer_page.py
+│   │
+│   ├── auth/                     # Authentication module
+│   │   ├── __init__.py
+│   │   └── user.py              # User management and database
+│   │
+│   ├── config/                   # Configuration
+│   │   ├── __init__.py
+│   │   └── settings.py           # Application settings and paths
+│   │
+│   ├── models/                   # Machine learning models
+│   │   ├── __init__.py
+│   │   ├── decision_tree.py     # Decision Tree implementation
+│   │   ├── logistic_regression.py # Logistic Regression implementation
+│   │   └── svm.py               # Support Vector Machine implementation
+│   │
+│   ├── training/                 # Model training scripts
+│   │   ├── __init__.py
+│   │   ├── train_diabetes.py    # Train diabetes model
+│   │   └── train_heart.py       # Train heart disease model
+│   │
+│   └── utils/                    # Utility functions
+│       ├── __init__.py
+│       ├── visualization.py     # Plotting and visualization
+│       └── database.py          # Database utilities
+│
+└── utils/                        # Data utilities
+    ├── data_preprocessing.py    # Data processing functions
+    ├── model_evaluation.py      # Model evaluation metrics
+    └── __pycache__/
+    
+```
+
+## Technologies Used
+
+- Python: Core programming language
+- Streamlit: Web application framework
+- NumPy: Numerical computations
+- Pandas: Data manipulation
+- Scikit-learn: ML preprocessing and metrics
+- Matplotlib and Seaborn: Data visualization
+- SQLite: User database
+- PIL: Image processing
 
 ## Datasets
 
-### 1. Heart Disease Dataset
+### Heart Disease Dataset
+Features: 13 attributes including age, sex, chest pain type, blood pressure, cholesterol, ECG results, and more
 
-The dataset includes various medical features related to heart health from Kaggle.
+### Diabetes Dataset
+Features: 8 attributes including pregnancies, glucose level, blood pressure, BMI, insulin, and age
 
-#### Attribute Information
+### Breast Cancer Dataset
+Features: 30 attributes reduced to 10 principal components using PCA
 
-- **AGE**: Age in years
-- **SEX**: (1 = male; 0 = female)
-- **CP (Chest Pain Type)**:
-  - 0: Typical angina (most serious)
-  - 1: Atypical angina
-  - 2: Non-anginal pain
-  - 3: Asymptomatic (least serious)
-- **TRESTBPS**: Resting blood pressure (in mm Hg on admission to the hospital)
-- **CHOL**: Serum cholesterol in mg/dl
-- **FBS**: (Fasting blood sugar > 120 mg/dl) (1 = true; 0 = false)
-- **RESTECG (Resting Electrocardiographic Results)**:
-  - 0: Normal
-  - 1: ST-T wave abnormality
-  - 2: Left ventricular hypertrophy
-- **THALACH**: Maximum heart rate achieved
-- **EXANG**: Exercise-induced angina (1 = yes; 0 = no)
-- **OLDPEAK**: ST depression induced by exercise relative to rest
-- **SLOPE (The slope of the peak exercise ST segment)**:
-  - 0: Upsloping
-  - 1: Flat
-  - 2: Downsloping
-- **CA**: Number of major vessels (0-3) colored by fluoroscopy
-- **THAL**:
-  - 3 = Normal
-  - 6 = Fixed defect
-  - 7 = Reversible defect
-- **TARGET**: Heart disease diagnosis (0 = No disease, 1 = Disease present)
+## Machine Learning Models
 
-### 2. Breast Cancer Dataset
+### 1. Heart Disease - Logistic Regression
+- Custom implementation using gradient descent
+- Learning rate: 0.01
+- Epochs: 1000
+- Activation: Sigmoid function
 
-The dataset uses the **Wisconsin Breast Cancer Dataset** from scikit-learn, containing features computed from digitized images of fine needle aspirates (FNA) of breast masses.
+### 2. Diabetes - Decision Tree
+- Custom implementation with Gini impurity
+- Binary tree with recursive splitting
+- Input validation for data quality
 
-#### Key Features
-
-The dataset includes 30 features describing characteristics of cell nuclei present in the image:
-
-- **Mean Features**: Mean values of measurements (e.g., mean radius, mean texture, mean area, mean perimeter, etc.)
-- **Standard Error Features**: Standard error of measurements
-- **Worst Features**: Largest (worst) values of measurements
-
-#### Top Features Used (Selected via PCA)
-
-The model uses Principal Component Analysis (PCA) to identify the top 10 most important features for prediction, including:
-
-- Mean radius, mean texture, mean area, mean perimeter
-- Mean smoothness, mean compactness, mean concavity
-- Mean concave points, mean symmetry, mean fractal dimension
-- And other critical features
-
-#### Target Variable
-
-- **0**: Benign (Non-cancerous)
-- **1**: Malignant (Cancerous)
-
-## Models
-
-- **Algorithm**: Decision Tree
-- **Splitting Criteria**: Gini Impurity / Information Gain
-- **Features**: 8 medical attributes
-- **Performance**: Effective in capturing non-linear relationships
-
-#### How It Works
-
-Decision Tree recursively splits data based on feature values to form a tree structure. Each node represents a decision, and each leaf represents the predicted class (diabetes or not).
-
-### 3. Breast Cancer Prediction - Support Vector Machine (SVM)
-
-- **Algorithm**: Support Vector Machine (SVM)
-- **Optimization**: Gradient Descent
-- **Loss Function**: Hinge Loss
-- **Dimensionality Reduction**: Principal Component Analysis (PCA) - 10 components
-- **Features**: 30 original features reduced to top 10 via PCA
-- **Performance**: High accuracy in classifying malignant vs benign tumors
-
-#### How It Works
-
-SVM finds the optimal hyperplane that best separates malignant and benign tumors by maximizing the margin between support vectors. The model:
-
-- Uses PCA to reduce 30 features to 10 principal components
-- Converts labels from {0, 1} to {-1, +1} for hinge loss calculation
-- Trains using gradient descent with regularization
-- Predicts based on which side of the hyperplane the data point falls
-
-#### Key Advantages for Breast Cancer
-
-- **High-Dimensional Data Handling**: Effective with 30 features
-- **Robust Decision Boundary**: Maximizes margin for better generalization
-- **Memory Efficient**: Only uses support vectors for prediction
-- **Works Well with PCA**: Complements dimensionality reduction techniques
+### 3. Breast Cancer - Support Vector Machine (SVM)
+- Custom SVM implementation with hinge loss
+- PCA dimensionality reduction (30 to 10 features)
+- L2 regularization for preventing overfitting
 
 ## Installation
 
 1. Clone the repository:
-
    ```bash
    git clone https://github.com/asmriti/Multiple-Disease-Prediction.git
    cd Multiple-Disease-Prediction
    ```
 
-2. Create a virtual environment (recommended):
-
+2. Create and activate virtual environment:
    ```bash
-   python -m venv disease-prediction-env
-   source disease-prediction-env/bin/activate  # On Windows: disease-prediction-env\Scripts\activate
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
    ```
 
 3. Install dependencies:
@@ -141,125 +164,103 @@ SVM finds the optimal hyperplane that best separates malignant and benign tumors
 
 ## Usage
 
-1. Run the Streamlit application:
-
+1. Run the application:
    ```bash
    streamlit run app.py
    ```
 
-2. The application will open in your default web browser at `http://localhost:8501`
+2. Open browser to: http://localhost:8501
 
-3. **First Time Users**:
+3. Create an account or login
 
-   - Click "Sign Up" to create an account
-   - Enter your email, username, and password
-   - After signing up, you'll be automatically logged in
+4. Select disease prediction from sidebar
 
-4. **Returning Users**:
+5. Fill in medical parameters and get prediction
 
-   - Click "Login" and enter your credentials
+## Key Modules
 
-5. **Making Predictions**:
+### app.py
+Main entry point. Handles:
+- User authentication (signup/login)
+- Navigation menu
+- Page routing to disease prediction pages
+- Prediction history display
 
-   - Select a disease from the sidebar (Diabetes, Heart Disease, or Breast Cancer)
-   - Enter the required patient details
-   - Click the prediction button to get results
-   - Your prediction will be saved to "My Predictions"
+### src/app/pages/
+Individual disease prediction interfaces:
+- diabetes_page.py: Diabetes prediction with 8 input fields
+- heart_page.py: Heart disease prediction with 13 input fields
+- breast_cancer_page.py: Breast cancer prediction with 10 PCA features
 
-6. **Exploring Features**:
-   - **My Predictions**: View your prediction history
-   - **Model Test Results**: See detailed performance metrics for each model
-   - **EDA Sections**: Explore data visualizations and distributions
-   - **Model Description**: Learn about the algorithms used
+### src/auth/user.py
+User management:
+- User registration and login
+- Password hashing with SHA-256
+- Prediction history storage
+- Recent prediction checking for health alerts
 
-## Project Structure
+### src/models/
+Custom ML implementations:
+- decision_tree.py: Custom Decision Tree classifier
+- logistic_regression.py: Custom Logistic Regression
+- svm.py: Custom SVM with PCA support
+
+### src/training/
+Model training scripts:
+- train_diabetes.py: Trains Decision Tree on diabetes data
+- train_heart.py: Trains Logistic Regression on heart data
+
+### src/utils/
+Utility functions:
+- data_preprocessing.py: Data normalization and splitting
+- model_evaluation.py: Model evaluation and metrics
+- visualization.py: Plotting and chart generation
+- database.py: Database operations
+
+## Database Schema
+
+### Users Table
+- email (PRIMARY KEY)
+- username (UNIQUE)
+- password (SHA-256 hashed)
+
+### User Predictions Table
+- id (PRIMARY KEY)
+- email (FOREIGN KEY)
+- disease
+- input_parameters (JSON)
+- prediction_result
+- timestamp
+
+## Features Explained
+
+### User Authentication
+Users can sign up and login securely. All predictions are stored with user email.
+
+### Prediction History
+View all past predictions with timestamps and input parameters.
+
+### Health Alerts
+System warns if user gets 3+ positive predictions for same disease within 30 days.
+
+### Model Performance
+Each model page shows:
+- Confusion matrix
+- Accuracy metrics
+- Precision, Recall, F1-Score
+
+### EDA Visualizations
+Jupyter notebooks in notebooks/eda/ provide detailed data analysis.
+
+## Requirements
 
 ```
-Multiple-Disease-Prediction/
-├── app.py                          # Main application file
-├── app_diabetes.py                 # Diabetes prediction module
-├── app_heart.py                    # Heart disease prediction module
-├── app_breast_cancer.py            # Breast cancer prediction module
-├── user.py                         # User authentication and database functions
-├── database.py                     # Database utilities
-├── models/
-│   ├── logistic_regression.py      # Logistic Regression implementation
-│   ├── decision_tree.py            # Decision Tree implementation
-│   └── svm.py                      # SVM implementation
-├── utils/
-│   ├── data_preprocessing.py       # Data preprocessing utilities
-│   └── model_evaluation.py         # Model evaluation utilities
-├── dataset/
-│   ├── diabetes.csv                # Diabetes dataset
-│   └── heart.csv                   # Heart disease dataset
-├── EDA/                            # Exploratory Data Analysis images
-│   ├── Heart_Disease_Pie.png
-│   ├── Categorical_data.png
-│   ├── Numerical_data.png
-│   ├── Correlation_Heatmap.png
-│   ├── pie-chart.png
-│   ├── datadistribution_diabetes.png
-│   └── heat-map.png
-├── saved_models/                   # Trained model files
-├── processed_data/                 # Preprocessed data files
-├── requirements.txt                # Python dependencies
-└── README.md                       # This file
+numpy==1.26.3
+scikit-learn==1.3.2
+streamlit==1.29.0
+streamlit-option-menu==0.3.6
 ```
 
-## Technologies Used
-
-- **Python**: Core programming language
-- **Streamlit**: Web application framework
-- **NumPy**: Numerical computations
-- **Pandas**: Data manipulation and analysis
-- **Scikit-learn**: Machine learning algorithms and utilities
-- **Matplotlib & Seaborn**: Data visualization
-- **SQLite**: Database for user authentication and prediction history
-- **PIL**: Image processing
-
-## Key Features Implementation
-
-### Breast Cancer Prediction Specifics
-
-1. **Feature Selection with PCA**:
-
-   - Uses Principal Component Analysis to identify top 10 features from 30 original features
-   - Reduces dimensionality while maintaining important information
-   - Improves model performance and training speed
-
-2. **SVM with Hinge Loss**:
-
-   - Implements custom SVM with hinge loss function
-   - Uses gradient descent for optimization
-   - Includes L2 regularization to prevent overfitting
-
-3. **Data Preprocessing**:
-
-   - StandardScaler normalization for feature scaling
-   - Label conversion from {0, 1} to {-1, +1} for SVM compatibility
-   - Train-test split (80-20) for model evaluation
-
-4. **Real-time Predictions**:
-   - Input validation for all 10 features
-   - Real-time prediction with probability output
-   - Automatic saving to prediction history
-
-## Model Performance
-
-All models are evaluated on test datasets and provide:
-
-- **Accuracy Scores**
-- **Precision, Recall, and F1-Score**
-- **Confusion Matrices**
-- **Classification Reports**
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-This project is open source and available under the MIT License.
 
 ## Acknowledgments
 
@@ -268,6 +269,3 @@ This project is open source and available under the MIT License.
 - Breast Cancer Dataset: Wisconsin Breast Cancer Dataset (scikit-learn)
 - Scikit-learn library for machine learning utilities
 
-## Contact
-
-For questions or issues, please open an issue on GitHub.
