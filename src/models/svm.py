@@ -1,6 +1,9 @@
 import numpy as np
 import os
 from pathlib import Path
+import sys
+sys.path.append(str(Path(__file__).parent.parent.parent))
+from src.config.settings import SAVED_MODELS_DIR
 
 class SVM:
     def __init__(self, learning_rate=0.001, lambda_param=0.01, n_iters=1000):
@@ -37,7 +40,7 @@ class SVM:
     def save_model(self, folder=None):
         """Save the SVM model weights and bias"""
         if folder is None:
-            folder = Path("saved_models") / "breast_cancer"
+            folder = SAVED_MODELS_DIR / "breast_cancer"
         os.makedirs(str(folder), exist_ok=True)
         np.save(str(Path(folder) / "svm_weights.npy"), self.w)
         np.save(str(Path(folder) / "svm_bias.npy"), self.b)
@@ -47,7 +50,7 @@ class SVM:
     def load_model(self, folder=None):
         """Load the SVM model weights and bias"""
         if folder is None:
-            folder = Path("saved_models") / "breast_cancer"
+            folder = SAVED_MODELS_DIR / "breast_cancer"
         self.w = np.load(str(Path(folder) / "svm_weights.npy"))
         self.b = np.load(str(Path(folder) / "svm_bias.npy"))
         params = np.load(str(Path(folder) / "svm_params.npy"))

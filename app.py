@@ -1,10 +1,12 @@
 import streamlit as st
-from user import login, sign_up
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).parent))
 from streamlit_option_menu import option_menu
-from app_diabetes import app_diabetes , show_diabetes_model_test_result, show_eda_for_diabetes, show_decision_tree_description
-from app_heart import app_heartdisease, model, show_heart_model_test_result, show_eda_for_heart_disease, show_logistic_regression_description
-from app_breast_cancer import app_breast_cancer, show_breast_cancer_model_test_result, show_eda_for_breast_cancer, show_svm_description
-from user import get_user_predictions  # Import database function
+from src.auth.user import login, sign_up, get_user_predictions
+from src.app.pages.diabetes_page import app_diabetes, show_diabetes_model_test_result, show_eda_for_diabetes, show_decision_tree_description
+from src.app.pages.heart_page import app_heartdisease, model, show_heart_model_test_result, show_eda_for_heart_disease, show_logistic_regression_description
+from src.app.pages.breast_cancer_page import app_breast_cancer, show_breast_cancer_model_test_result, show_eda_for_breast_cancer, show_svm_description
 
 # Set page config at the top before any other Streamlit command
 st.set_page_config(page_title="Health Assistant",
