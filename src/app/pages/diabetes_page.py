@@ -289,9 +289,7 @@ def show_decision_tree_description():
     This helps to find the most informative features for splitting the data.
     """)
 
-    # Show Gini and Information Gain Diagrams
-    # st.image('gini_impurity.png', caption="Gini Impurity", use_column_width=True)
-    # st.image('information_gain.png', caption="Information Gain", use_column_width=True)
+   
 
     # Overfitting and Pruning
     st.subheader("⚖️ Overfitting and Pruning")
@@ -306,7 +304,7 @@ def show_decision_tree_description():
     Pruning can be done through various strategies like pre-pruning (limiting the tree depth) and post-pruning (removing nodes after the tree is fully grown).
     """)
 
-    # Show Overfitting and Pruning Diagrams
+   
    
 
     # Why Decision Tree for Heart Disease Prediction?

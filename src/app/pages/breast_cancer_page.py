@@ -16,7 +16,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 from src.auth.user import check_recent_predictions
-from src.config.settings import DATABASE_DIR, PLOTS_DIR, EDA_BREAST_CANCER_DIR, STATIC_BREAST_CANCER_DIR
+from src.config.settings import DATABASE_DIR
 
 def save_user_prediction(email, disease, input_data, result):
     """Save user prediction to database"""
@@ -33,7 +33,7 @@ def load_and_train_model():
     # Load dataset from sklearn
     data = load_breast_cancer()
     df = pd.DataFrame(data.data, columns=data.feature_names)
-    df['diagnosis'] = data.target  # Add target column (0 = Benign, 1 = Malignant)
+    df['diagnosis'] = data.target
     
     # Function to get the top features based on PCA
     def get_top_pca_features(df, n_components=10):

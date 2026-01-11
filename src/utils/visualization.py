@@ -37,11 +37,11 @@ def plot_metrics(metrics_file=None):
         accuracy_bar = plt.bar(len(metrics), overall_data[0], width=bar_width, color='#ffcc00', label='Overall')
         metrics.append('Accuracy')   
 
-    plt.xticks(np.arange(len(metrics)), metrics, fontsize=14)  # Set x-ticks to be the metrics
-    plt.yticks(fontsize=14)  # Set y-ticks font size
-    plt.ylabel('Value', labelpad=15, fontsize=14)  # Change to ylabel for vertical bars
-    plt.ylim(0, 1)  # Y-axis limit (0 to 1, for metric values)
-    plt.title('Model Performance Metrics (Test Set)', pad=20, size=18, weight='bold')  # Title of the plot
+    plt.xticks(np.arange(len(metrics)), metrics, fontsize=14)  
+    plt.yticks(fontsize=14)  
+    plt.ylabel('Value', labelpad=15, fontsize=14)  
+    plt.ylim(0, 1)  
+    plt.title('Model Performance Metrics (Test Set)', pad=20, size=18, weight='bold')
 
     # Add text labels on the bars
     for bars in [bars1, bars2, accuracy_bar]:
@@ -50,10 +50,10 @@ def plot_metrics(metrics_file=None):
             plt.text(bar.get_x() + bar.get_width()/2, height,
                      f'{100*height:.2f}%', ha='center', va='bottom', fontsize=14)
 
-    plt.legend(loc='upper left', fontsize=14)  # Adjust legend location
-    plt.grid(True, axis='y', linestyle='--', alpha=0.7)  # Grid lines along the y-axis
+    plt.legend(loc='upper left', fontsize=14)  
+    plt.grid(True, axis='y', linestyle='--', alpha=0.7) 
     
-    plt.tight_layout()  # Adjust layout to avoid clipping
+    plt.tight_layout()  
     plt.savefig(str(PLOTS_DIR / 'metrics_plot.png'), dpi=300, bbox_inches='tight')  # Save plot as PNG
     plt.close()  # Close the plot
 

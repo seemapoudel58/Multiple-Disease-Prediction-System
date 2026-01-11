@@ -234,24 +234,3 @@ def check_recent_predictions(email, disease_type):
     return len(predictions) >= 3
 
 
-# def check_recent_predictions(email, disease_type):
-#     conn = sqlite3.connect('new_user.db')
-#     cursor = conn.cursor()
-    
-#     # Get the current date and the date 30 days ago
-#     current_date = datetime.now()
-#     thirty_days_ago = current_date - timedelta(days=30)
-    
-#     # Query to get all the positive predictions for the specific disease within the last 30 days
-#     cursor.execute("""
-#         SELECT * FROM user_predictions
-#         WHERE email = ? AND disease = ? AND prediction_result = 1 AND timestamp >= ?
-#     """, (email, disease_type, thirty_days_ago.strftime('%Y-%m-%d %H:%M:%S')))
-    
-#     predictions = cursor.fetchall()
-#     conn.close()
-
-#     # Return True if there are 3 or more positive predictions in the last 30 days
-#     return len(predictions) >= 3
-
-
