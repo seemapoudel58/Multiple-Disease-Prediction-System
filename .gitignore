@@ -14,4 +14,3 @@ saved_models/
 **/saved_models/*.pkl
 processed_data/
 dataset/
-models/__pycache__/
