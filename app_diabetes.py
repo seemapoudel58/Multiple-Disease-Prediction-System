@@ -82,13 +82,6 @@ def app_diabetes():
         st.warning("⚠️ **Alert:** You have predicted **Diabetes** 3 or more times in the last 30 days with a positive result. Please consult a doctor.")
 
 
-    # if show_performance:
-    #     st.subheader("Model Performance on Test Data")
-    #     col1, col2 = st.columns([7, 3.27])
-    #     with col1:
-    #         st.image('metrics_plot.png')
-    #     with col2:
-    #         st.image('confusion_matrix_custom.png')
 
 def show_diabetes_model_test_result():
     """Display Diabetes Model Test Results"""
