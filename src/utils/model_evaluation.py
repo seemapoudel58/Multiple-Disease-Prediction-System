@@ -6,7 +6,7 @@ import seaborn as sns
 import os
 import matplotlib
 
-matplotlib.use('Agg')  # Use a non-GUI backend
+matplotlib.use('Agg') 
 
 class ModelEvaluator:
     def __init__(self, model_folder="saved_models", data_folder="processed_data"):
