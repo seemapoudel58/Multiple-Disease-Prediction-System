@@ -13,4 +13,5 @@ saved_models/
 **/saved_models/*.sav
 **/saved_models/*.pkl
 processed_data/
+data/processed/
 dataset/
