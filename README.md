@@ -94,12 +94,10 @@ Multiple-Disease-Prediction/
 │   └── utils/                    # Utility functions
 │       ├── __init__.py
 │       ├── visualization.py     # Plotting and visualization
-│       └── database.py          # Database utilities
-│
-└── utils/                        # Data utilities
-    ├── data_preprocessing.py    # Data processing functions
-    ├── model_evaluation.py      # Model evaluation metrics
-    └── __pycache__/
+│       ├── database.py          # Database utilities
+│       ├── data_preprocessing.py # Data preprocessing functions
+│       └── model_evaluation.py  # Model evaluation utilities
+
     
 ```
 
