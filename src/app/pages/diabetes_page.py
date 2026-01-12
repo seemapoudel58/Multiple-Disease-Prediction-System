@@ -7,7 +7,7 @@ from pathlib import Path
 from PIL import Image
 sys.path.append(str(Path(__file__).parent.parent.parent.parent))
 from src.auth.user import check_recent_predictions
-from src.config.settings import DATABASE_DIR, SAVED_MODELS_DIR, RESULTS_DIR, PLOTS_DIR, EDA_DIABETES_DIR, STATIC_ASSETS_DIR
+from src.config.settings import DATABASE_DIR, SAVED_MODELS_DIR, PLOTS_DIR, EDA_DIABETES_DIR, STATIC_ASSETS_DIR
 
 # Function to save predictions in the database
 def save_user_prediction(email, disease, input_data, result):
@@ -99,7 +99,7 @@ def show_diabetes_model_test_result():
     )
     
     # Display test data percentage
-    test_ratio = 0.20  # Assuming train_ratio=0.80 and test_ratio=0.20
+    test_ratio = 0.20  
     st.info(f"🩺 **Test Data Percentage:** {test_ratio * 100:.2f}% of total data.")
     
     st.title("Diabetes Model Test Results")
